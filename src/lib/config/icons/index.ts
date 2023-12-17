@@ -1,5 +1,5 @@
-import { siteConfig } from "../site";
+import Logo from './logo.svelte';
 
 export const Icons = {
-    logo: siteConfig.logo
+    logo: Logo
 }

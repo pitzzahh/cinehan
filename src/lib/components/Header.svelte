@@ -1,7 +1,16 @@
 <script lang="ts">
 	import { Button } from './ui/button';
 	import * as Command from '$lib/components/ui/command';
-	import { EnvelopeClosed, Gear, Person } from 'radix-icons-svelte';
+	import {
+		Home,
+		ChatBubble,
+		Video,
+		ListBullet,
+		EnvelopeClosed,
+		Gear,
+		Person,
+		EnvelopeOpen
+	} from 'radix-icons-svelte';
 	import { onMount } from 'svelte';
 	import { Icons } from '$lib/config/icons';
 	import { goto } from '$app/navigation';
@@ -9,6 +18,7 @@
 	import { Sun, Moon, MagnifyingGlass } from 'radix-icons-svelte';
 	import { setMode, resetMode } from 'mode-watcher';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import { page } from '$app/stores';
 
 	let open = false;
 
@@ -40,12 +50,15 @@
 			<Icons.logo on:click={() => goto('/')} />
 			<div class="hidden gap-6 md:flex">
 				{#each siteConfig.navLinks as link}
-					<button 
+					<button
 						on:click={() => {
 							goto(link.to);
-							link.selected = !link.selected;
+							siteConfig.navLinks.forEach((e) => {
+								e.selected = false;
+							});
+							link.selected = true;
 						}}
-						class:selectedLink={link.selected}>{link.text}</button
+						class:selectedLink={$page.route && link.to === $page.route.id}>{link.text}</button
 					>
 				{/each}
 			</div>
@@ -60,13 +73,18 @@
 				<div>
 					<MagnifyingGlass class="mr-2 h-4 w-4" />
 				</div>
-				<span class="hidden lg:inline-flex"> Search movies... </span>
-				<span class="inline-flex lg:hidden">Search...</span>
+				<span class="hidden md:inline-flex"> Search movies... </span>
+				<span class="inline-flex md:hidden">Search...</span>
 				<kbd
 					class="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 md:flex"
 				>
 					<span class="text-xs">⌘</span>K
 				</kbd>
+			</Button>
+
+			<Button class="hidden md:flex">
+				<EnvelopeOpen class="mr-2 h-4 w-4" />
+				Login
 			</Button>
 
 			<DropdownMenu.Root>
@@ -96,17 +114,22 @@
 	<Command.List>
 		<Command.Empty>No results found.</Command.Empty>
 		<Command.Group heading="Suggestions">
-			{#each siteConfig.navLinks as link}
-				<Command.Item
-					value={link.text}
-					onSelect={() =>
-						runCommand(() => {
-							link.to && goto(link.to);
-						})}
-				>
-					<span>{link.text}</span>
-				</Command.Item>
-			{/each}
+			<Command.Item value="Home" onSelect={() => runCommand(() => goto('/'))}>
+				<Home class="mr-2 h-4 w-4" />
+				<span>Home</span>
+			</Command.Item>
+			<Command.Item value="Trending" onSelect={() => runCommand(() => goto('/trending'))}>
+				<ChatBubble class="mr-2 h-4 w-4" />
+				<span>Trending</span>
+			</Command.Item>
+			<Command.Item value="Movies" onSelect={() => runCommand(() => goto('/movies'))}>
+				<Video class="mr-2 h-4 w-4" />
+				<span>Movies</span>
+			</Command.Item>
+			<Command.Item value="Series" onSelect={() => runCommand(() => goto('/series'))}>
+				<ListBullet class="mr-2 h-4 w-4" />
+				<span>Series</span>
+			</Command.Item>
 			<Command.Separator />
 			<Command.Item>
 				<Person class="mr-2 h-4 w-4" />

@@ -5,7 +5,7 @@
 </script>
 
 <button class="space-between mr-4 flex cursor-pointer items-center" {...$$restProps} on:click>
-	<span class="mr-1 text-xl font-bold text-[#FD3E01]">{siteConfig.name}</span>
+	<span class="mr-1 text-2xl font-bold text-[#FD3E01]">{siteConfig.name}</span>
 	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		width="24"
