@@ -9,9 +9,7 @@
 		EnvelopeClosed,
 		Gear,
 		Person,
-
 		EnvelopeOpen
-
 	} from 'radix-icons-svelte';
 	import { onMount } from 'svelte';
 	import { Icons } from '$lib/config/icons';
@@ -20,6 +18,7 @@
 	import { Sun, Moon, MagnifyingGlass } from 'radix-icons-svelte';
 	import { setMode, resetMode } from 'mode-watcher';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import { page } from '$app/stores';
 
 	let open = false;
 
@@ -54,9 +53,12 @@
 					<button
 						on:click={() => {
 							goto(link.to);
-							link.selected = !link.selected;
+							siteConfig.navLinks.forEach((e) => {
+								e.selected = false;
+							});
+							link.selected = true;
 						}}
-						class:selectedLink={link.selected}>{link.text}</button
+						class:selectedLink={$page.route && link.to === $page.route.id}>{link.text}</button
 					>
 				{/each}
 			</div>
@@ -71,8 +73,8 @@
 				<div>
 					<MagnifyingGlass class="mr-2 h-4 w-4" />
 				</div>
-				<span class="hidden lg:inline-flex"> Search movies... </span>
-				<span class="inline-flex lg:hidden">Search...</span>
+				<span class="hidden md:inline-flex"> Search movies... </span>
+				<span class="inline-flex md:hidden">Search...</span>
 				<kbd
 					class="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 md:flex"
 				>
@@ -80,9 +82,9 @@
 				</kbd>
 			</Button>
 
-			<Button>
+			<Button class="hidden md:flex">
 				<EnvelopeOpen class="mr-2 h-4 w-4" />
-				Login with Email
+				Login
 			</Button>
 
 			<DropdownMenu.Root>
@@ -103,7 +105,6 @@
 					<DropdownMenu.Item on:click={() => resetMode()}>System</DropdownMenu.Item>
 				</DropdownMenu.Content>
 			</DropdownMenu.Root>
-
 		</div>
 	</div>
 </header>
