@@ -1,7 +1,18 @@
 <script lang="ts">
 	import { Button } from './ui/button';
 	import * as Command from '$lib/components/ui/command';
-	import { EnvelopeClosed, Gear, Person } from 'radix-icons-svelte';
+	import {
+		Home,
+		ChatBubble,
+		Video,
+		ListBullet,
+		EnvelopeClosed,
+		Gear,
+		Person,
+
+		EnvelopeOpen
+
+	} from 'radix-icons-svelte';
 	import { onMount } from 'svelte';
 	import { Icons } from '$lib/config/icons';
 	import { goto } from '$app/navigation';
@@ -40,7 +51,7 @@
 			<Icons.logo on:click={() => goto('/')} />
 			<div class="hidden gap-6 md:flex">
 				{#each siteConfig.navLinks as link}
-					<button 
+					<button
 						on:click={() => {
 							goto(link.to);
 							link.selected = !link.selected;
@@ -69,6 +80,11 @@
 				</kbd>
 			</Button>
 
+			<Button>
+				<EnvelopeOpen class="mr-2 h-4 w-4" />
+				Login with Email
+			</Button>
+
 			<DropdownMenu.Root>
 				<DropdownMenu.Trigger asChild let:builder>
 					<Button builders={[builder]} variant="outline" size="icon">
@@ -87,6 +103,7 @@
 					<DropdownMenu.Item on:click={() => resetMode()}>System</DropdownMenu.Item>
 				</DropdownMenu.Content>
 			</DropdownMenu.Root>
+
 		</div>
 	</div>
 </header>
@@ -96,17 +113,22 @@
 	<Command.List>
 		<Command.Empty>No results found.</Command.Empty>
 		<Command.Group heading="Suggestions">
-			{#each siteConfig.navLinks as link}
-				<Command.Item
-					value={link.text}
-					onSelect={() =>
-						runCommand(() => {
-							link.to && goto(link.to);
-						})}
-				>
-					<span>{link.text}</span>
-				</Command.Item>
-			{/each}
+			<Command.Item value="Home" onSelect={() => runCommand(() => goto('/'))}>
+				<Home class="mr-2 h-4 w-4" />
+				<span>Home</span>
+			</Command.Item>
+			<Command.Item value="Trending" onSelect={() => runCommand(() => goto('/trending'))}>
+				<ChatBubble class="mr-2 h-4 w-4" />
+				<span>Trending</span>
+			</Command.Item>
+			<Command.Item value="Movies" onSelect={() => runCommand(() => goto('/movies'))}>
+				<Video class="mr-2 h-4 w-4" />
+				<span>Movies</span>
+			</Command.Item>
+			<Command.Item value="Series" onSelect={() => runCommand(() => goto('/series'))}>
+				<ListBullet class="mr-2 h-4 w-4" />
+				<span>Series</span>
+			</Command.Item>
 			<Command.Separator />
 			<Command.Item>
 				<Person class="mr-2 h-4 w-4" />
