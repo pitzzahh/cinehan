@@ -79,7 +79,7 @@
 									>{formatRuntime(Number(trendingMovie.duration))}</span
 								>
 							</span>
-							<span class="mt-2 line-clamp-2 overflow-hidden text-ellipsis text-sm">
+							<span class="mt-2 line-clamp-2 overflow-hidden text-ellipsis text-sm md:text-lg">
 								{trendingMovie.description}
 							</span>
 							<div class="mt-4 flex space-x-2">
