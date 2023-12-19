@@ -1,8 +1,3 @@
-type NavItem = {
-  text: string,
-  to: string,
-  selected: boolean | false
-}
 
 export const siteConfig = {
   name: "cinehan",
@@ -11,10 +6,10 @@ export const siteConfig = {
   description: "Movie streaming site.",
   keywords: `cinehan,sinehan,freemovie,streammovie`,
   navLinks: [
-    { text: 'Home', to: '/' },
-    { text: 'Trending', to: '/trending' },
-    { text: 'Movies', to: '/movies' },
-    { text: 'Series', to: '/series' }
+    { text: 'Home', href: '/' },
+    { text: 'Trending', href: '/trending' },
+    { text: 'Movies', href: '/movies' },
+    { text: 'Series', href: '/series' }
   ] as NavItem[]
 };
 
