@@ -32,6 +32,10 @@ export const fetchTrendingMovies = async (tmdbApiKey: string): Promise<IMovieInf
     }
 }
 
+export const formatDate = (dateString: string | undefined) => {
+    return dateString ? new Date(dateString).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) : dateString;
+};
+
 export const formatRuntime = (runtime: number | undefined) => {
     if (runtime === undefined) {
         return '';

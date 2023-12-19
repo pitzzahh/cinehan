@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { store, formatRuntime } from '$lib';
+	import { store, formatRuntime, formatDate } from '$lib';
 	import { Skeleton } from '$lib/components/ui/skeleton';
 	import { ExclamationTriangle, Play, Star, Clock, Video, Calendar } from 'radix-icons-svelte';
 	import * as Alert from '$lib/components/ui/alert';
@@ -22,7 +22,7 @@
 			<div class="absolute bottom-0 left-0 mx-4 h-full p-4 text-xl text-white">
 				<!-- Title -->
 				<Skeleton class="mt-2 h-8 w-20 " />
-				<div class="mt-4 flex items-center">
+				<div class="mt-4 flex items-center scrollbar-hide">
 					<Video class="mr-2 h-5 w-5 text-theme" />
 					<!-- Media Type -->
 					<Skeleton class="h-4 w-12 md:h-5 md:w-14" />
@@ -32,6 +32,9 @@
 					<Clock class="mx-2 h-5 w-5 text-theme" />
 					<!-- Runtime -->
 					<Skeleton class="h-4 w-12 md:h-5 md:w-14" />
+                    <Calendar class="mx-2 h-5 w-5 text-theme" />
+					<!-- Release Data -->
+					<Skeleton class="h-4 w-16 md:h-5 md:w-14" />
 				</div>
 				<Skeleton class="mt-2 h-8 w-auto" />
 				<div class="mt-4 flex space-x-2">
@@ -64,7 +67,7 @@
 						alt={trendingMovie.title.toString()}
 					/>
 					<div class="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
-					<div class="absolute bottom-0 left-0 text-xl text-white">
+					<div class="absolute bottom-0 left-0 text-xl text-white .scrollbar-hide">
 						<div class="mx-2 p-2">
 							<h1 class="mt-2 text-lg font-extrabold md:text-3xl lg:text-3xl">
 								{trendingMovie.title}
@@ -79,7 +82,7 @@
 									>{formatRuntime(Number(trendingMovie.duration))}</span
 								>
 								<Calendar class="mx-2 h-5 w-5 text-theme" />
-								<span class="text-sm md:text-lg">{trendingMovie.releaseDate}</span>
+								<span class="text-sm md:text-lg">{formatDate(trendingMovie.releaseDate)}</span>
 							</span>
 							<span class="mt-2 line-clamp-2 overflow-hidden text-ellipsis text-sm md:text-lg">
 								{trendingMovie.description}
