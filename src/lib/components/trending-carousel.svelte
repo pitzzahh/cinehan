@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { store, formatRuntime } from '$lib';
 	import { Skeleton } from '$lib/components/ui/skeleton';
-	import { ExclamationTriangle, Play, Star, Clock, Video } from 'radix-icons-svelte';
+	import { ExclamationTriangle, Play, Star, Clock, Video, Calendar } from 'radix-icons-svelte';
 	import * as Alert from '$lib/components/ui/alert';
 	import { Splide, SplideSlide } from '@splidejs/svelte-splide';
 	import '@splidejs/svelte-splide/css';
@@ -78,6 +78,8 @@
 								<span class="text-sm md:text-lg"
 									>{formatRuntime(Number(trendingMovie.duration))}</span
 								>
+								<Calendar class="mx-2 h-5 w-5 text-theme" />
+								<span class="text-sm md:text-lg">{trendingMovie.releaseDate}</span>
 							</span>
 							<span class="mt-2 line-clamp-2 overflow-hidden text-ellipsis text-sm md:text-lg">
 								{trendingMovie.description}
