@@ -8,7 +8,7 @@
 	import '@splidejs/svelte-splide/css';
 	import { Button } from '$lib/components/ui/button';
 	import type { PageData } from '../../routes/$types';
-	
+
 	export let data: PageData;
 
 	onMount(async () => ($store.trendingMovies = data.streamed.trendingMovies));
@@ -63,34 +63,37 @@
 						src={trendingMovie.cover}
 						alt={trendingMovie.title.toString()}
 					/>
-					<div class="absolute inset-0 bg-black opacity-60" />
-					<div class="absolute bottom-0 left-0 mx-2 p-2 text-xl text-white">
-						<h1 class="mt-2 text-lg font-extrabold md:text-3xl lg:text-3xl">
-							{trendingMovie.title}
-						</h1>
-						<span class="mt-4 flex items-center">
-							<Video class="mr-2 h-5 w-5 text-theme" />
-							<span class="text-sm md:text-lg">{trendingMovie.type}</span>
-							<Star class="mx-2 h-5 w-5 text-theme" />
-							<span class="text-sm md:text-lg">{trendingMovie?.rating?.toFixed(1)}</span>
-							<Clock class="mx-2 h-5 w-5 text-theme" />
-							<span class="text-sm md:text-lg">{formatRuntime(Number(trendingMovie.duration))}</span
-							>
-						</span>
-						<span class="mt-2 line-clamp-2 overflow-hidden text-ellipsis text-sm">
-							{trendingMovie.description}
-						</span>
-						<div class="mt-4 flex space-x-2">
-							<a href="/movies/{trendingMovie.id}">
-								<Button class="transition-all hover:bg-theme hover:text-theme-foreground">
-									<Play class="mr-1 h-4 w-4 md:h-5 md:w-5" /> Watch
-								</Button>
-							</a>
-							<a href="/">
-								<Button class="transition-all hover:bg-theme hover:text-theme-foreground">
-									<Star class="mr-1 h-4 w-4 md:h-5 md:w-5" /> Rate
-								</Button>
-							</a>
+					<div class="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
+					<div class="absolute bottom-0 left-0 text-xl text-white">
+						<div class="mx-2 p-2">
+							<h1 class="mt-2 text-lg font-extrabold md:text-3xl lg:text-3xl">
+								{trendingMovie.title}
+							</h1>
+							<span class="mt-4 flex items-center">
+								<Video class="mr-2 h-5 w-5 text-theme" />
+								<span class="text-sm md:text-lg">{trendingMovie.type}</span>
+								<Star class="mx-2 h-5 w-5 text-theme" />
+								<span class="text-sm md:text-lg">{trendingMovie?.rating?.toFixed(1)}</span>
+								<Clock class="mx-2 h-5 w-5 text-theme" />
+								<span class="text-sm md:text-lg"
+									>{formatRuntime(Number(trendingMovie.duration))}</span
+								>
+							</span>
+							<span class="mt-2 line-clamp-2 overflow-hidden text-ellipsis text-sm">
+								{trendingMovie.description}
+							</span>
+							<div class="mt-4 flex space-x-2">
+								<a href="/movies/{trendingMovie.id}">
+									<Button class="transition-all hover:bg-theme hover:text-theme-foreground">
+										<Play class="mr-1 h-4 w-4 md:h-5 md:w-5" /> Watch
+									</Button>
+								</a>
+								<a href="/">
+									<Button class="transition-all hover:bg-theme hover:text-theme-foreground">
+										<Star class="mr-1 h-4 w-4 md:h-5 md:w-5" /> Rate
+									</Button>
+								</a>
+							</div>
 						</div>
 					</div>
 				</div>
