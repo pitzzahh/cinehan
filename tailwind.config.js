@@ -4,7 +4,7 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 const config = {
 	darkMode: ["class"],
 	content: ["./src/**/*.{html,js,svelte,ts}"],
-  safelist: ["dark"],
+	safelist: ["dark"],
 	theme: {
 		container: {
 			center: true,
@@ -20,6 +20,10 @@ const config = {
 				ring: "hsl(var(--ring) / <alpha-value>)",
 				background: "hsl(var(--background) / <alpha-value>)",
 				foreground: "hsl(var(--foreground) / <alpha-value>)",
+				theme: {
+					DEFAULT: "#FD3E01",
+					foreground: "#F7F7F7"
+				},
 				primary: {
 					DEFAULT: "hsl(var(--primary) / <alpha-value>)",
 					foreground: "hsl(var(--primary-foreground) / <alpha-value>)"
