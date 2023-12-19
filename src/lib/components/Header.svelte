@@ -19,8 +19,15 @@
 	import { setMode, resetMode } from 'mode-watcher';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { page } from '$app/stores';
+	import { store, fetchTrendingMovies } from '$lib';
+	import User from '$lib/config/icons/user.svelte';
 
 	let open = false;
+	let searchQuery: string;
+	let loading = false;
+	let items: string[] = [];
+
+	$: console.log(`SEARCH: ${searchQuery}`);
 
 	onMount(() => {
 		function handleKeydown(e: KeyboardEvent) {
@@ -30,6 +37,12 @@
 			}
 		}
 		document.addEventListener('keydown', handleKeydown);
+
+		loading = true;
+
+		items = ['First Item', 'Second Item'];
+
+		loading = false;
 
 		return () => {
 			document.removeEventListener('keydown', handleKeydown);
@@ -42,23 +55,24 @@
 	}
 </script>
 
-<header
-	class="sticky top-0 z-50 w-full border-b bg-background/95 shadow-sm backdrop-blur supports-[backdrop-filter]:bg-background/60"
->
-	<div class="container flex h-14 items-center justify-between">
+<header class="sticky top-0 z-50 w-full border-b bg-transparent shadow-sm backdrop-blur">
+	<div class="mx-10 flex h-14 items-center justify-between">
 		<div class="justify-left flex items-center">
 			<Icons.logo on:click={() => goto('/')} />
 			<div class="hidden gap-6 md:flex">
 				{#each siteConfig.navLinks as link}
 					<button
 						on:click={() => {
-							goto(link.to);
+							goto(link.href);
 							siteConfig.navLinks.forEach((e) => {
 								e.selected = false;
 							});
 							link.selected = true;
+							if (link.href === '/') {
+								$store.trendingMovies = fetchTrendingMovies(import.meta.env.VITE_TMDB_API_KEY);
+							}
 						}}
-						class:selectedLink={$page.route && link.to === $page.route.id}>{link.text}</button
+						class:selectedLink={$page.route && link.href === $page.route.id}>{link.text}</button
 					>
 				{/each}
 			</div>
@@ -82,14 +96,14 @@
 				</kbd>
 			</Button>
 
-			<Button class="hidden md:flex">
-				<EnvelopeOpen class="mr-2 h-4 w-4" />
-				Login
+			<Button class="">
+				<User class="h-4 w-4 md:mr-2" />
+				<span class="hidden md:flex">Login</span>
 			</Button>
 
 			<DropdownMenu.Root>
 				<DropdownMenu.Trigger asChild let:builder>
-					<Button builders={[builder]} variant="outline" size="icon">
+					<Button builders={[builder]} class="w-10" variant="outline" size="icon">
 						<Sun
 							class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
 						/>
@@ -110,7 +124,13 @@
 </header>
 
 <Command.Dialog bind:open>
-	<Command.Input placeholder="Type a command or search..." />
+	<Command.Input
+		placeholder="Type a command or search..."
+		on:change={(e) => {
+			console.log(`INPUT`);
+			console.log(JSON.stringify(e));
+		}}
+	/>
 	<Command.List>
 		<Command.Empty>No results found.</Command.Empty>
 		<Command.Group heading="Suggestions">
@@ -137,11 +157,6 @@
 				<Command.Shortcut>⌘P</Command.Shortcut>
 			</Command.Item>
 			<Command.Item>
-				<EnvelopeClosed class="mr-2 h-4 w-4" />
-				<span>Mail</span>
-				<Command.Shortcut>⌘B</Command.Shortcut>
-			</Command.Item>
-			<Command.Item>
 				<Gear class="mr-2 h-4 w-4" />
 				<span>Settings</span>
 				<Command.Shortcut>⌘S</Command.Shortcut>
@@ -149,7 +164,15 @@
 		</Command.Group>
 		<Command.Separator />
 		<Command.Group heading="Results">
-			<!-- Add results of search here -->
+			{#if searchQuery}
+				<Command.Loading>Please wait</Command.Loading>
+			{:else}
+				{#each items as item}
+					<Command.Item>
+						{item}
+					</Command.Item>
+				{/each}
+			{/if}
 		</Command.Group>
 	</Command.List>
 </Command.Dialog>
