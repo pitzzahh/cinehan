@@ -8,6 +8,12 @@ dependencies:
   '@consumet/extensions':
     specifier: ^1.5.4
     version: 1.5.4
+  '@oplayer/core':
+    specifier: ^1.2.31
+    version: 1.2.31
+  '@oplayer/ui':
+    specifier: ^1.2.34
+    version: 1.2.34(@oplayer/core@1.2.31)
   '@splidejs/svelte-splide':
     specifier: ^0.2.9
     version: 0.2.9
@@ -678,6 +684,18 @@ packages:
     dependencies:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.15.0
+
+  /@oplayer/core@1.2.31:
+    resolution: {integrity: sha512-KBoTdwaqcCVxO3xi7C+Z/2fRtSKc5FT/6PzUb/x6+vVUfNzU6hlbMqNDUrOqyERZHC+GHkFKhl0LJ255hIAYHQ==}
+    dev: false
+
+  /@oplayer/ui@1.2.34(@oplayer/core@1.2.31):
+    resolution: {integrity: sha512-Ip+FH4N8FBPX3+0xaYC/sUC4lNFeD+Q7ow6+iqwIlSKKgzvCQ++m7WcfMpkgYqXDeol/SB+EfhxksxKUn2y9jg==}
+    peerDependencies:
+      '@oplayer/core': '>=1.0.0'
+    dependencies:
+      '@oplayer/core': 1.2.31
+    dev: false
 
   /@polka/url@1.0.0-next.24:
     resolution: {integrity: sha512-2LuNTFBIO0m7kKIQvvPHN6UE63VjpmL9rnEEaOOaiSPbZK+zUOYIzBAWcED+3XYzhYsd/0mD57VdxAEqqV52CQ==}

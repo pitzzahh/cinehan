@@ -8,7 +8,7 @@
 	import '@splidejs/svelte-splide/css';
 	import { Button } from '$lib/components/ui/button';
 	import type { PageData } from '../../routes/$types';
-	
+
 	export let data: PageData;
 
 	onMount(async () => ($store.trendingMovies = data.streamed.trendingMovies));
@@ -72,16 +72,14 @@
 							<Video class="mr-2 h-5 w-5 text-theme" />
 							<span class="text-sm md:text-lg">{trendingMovie.type}</span>
 							<Star class="mx-2 h-5 w-5 text-theme" />
-							<span class="text-sm md:text-lg">{trendingMovie?.rating?.toFixed(1)}</span>
-							<Clock class="mx-2 h-5 w-5 text-theme" />
-							<span class="text-sm md:text-lg">{formatRuntime(Number(trendingMovie.duration))}</span
-							>
+							<span class="text-sm md:text-lg">{trendingMovie?.rating}</span>
+							<span class="text-sm md:text-lg">{trendingMovie.duration}</span>
 						</span>
 						<span class="mt-2 line-clamp-2 overflow-hidden text-ellipsis text-sm">
 							{trendingMovie.description}
 						</span>
 						<div class="mt-4 flex space-x-2">
-							<a href="/movies/{trendingMovie.id}">
+							<a href="/{trendingMovie.id}">
 								<Button class="transition-all hover:bg-theme hover:text-theme-foreground">
 									<Play class="mr-1 h-4 w-4 md:h-5 md:w-5" /> Watch
 								</Button>

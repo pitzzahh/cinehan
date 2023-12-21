@@ -10,6 +10,8 @@ export const siteConfig = {
     { text: 'Trending', href: '/trending' },
     { text: 'Movies', href: '/movies' },
     { text: 'Series', href: '/series' }
+    { text: 'Movies', href: '/movie' },
+    { text: 'TV Shows', href: '/tv' }
   ] as NavItem[]
 };
 
