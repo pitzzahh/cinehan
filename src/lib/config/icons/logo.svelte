@@ -4,7 +4,7 @@
 	type $$Props = HTMLAttributes<HTMLElement>;
 </script>
 
-<button class="space-between mr-4 flex cursor-pointer items-center" {...$$restProps} on:click>
+<button class="space-between flex cursor-pointer items-center" {...$$restProps} on:click>
 	<span class="mr-1 text-2xl font-bold text-theme">{siteConfig.name}</span>
 	<svg
 		xmlns="http://www.w3.org/2000/svg"

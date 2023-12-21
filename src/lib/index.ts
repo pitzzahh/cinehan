@@ -12,7 +12,7 @@ export const fetchTrendingMovies = async (tmdbApiKey: string): Promise<IMovieInf
         console.log(`Fetching trending movies`);
         const FlixHQTrendingMovies = await new MOVIES.FlixHQ().fetchTrendingMovies();
         const trendingTitles = FlixHQTrendingMovies.map((e) => {
-            return e.title
+            return e.id
         })
         console.log(`TRENDING MOVIES: ${JSON.stringify(trendingTitles)}`);
 

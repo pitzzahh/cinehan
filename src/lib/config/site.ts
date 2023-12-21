@@ -8,7 +8,6 @@ export const siteConfig = {
   navLinks: [
     { text: 'Home', href: '/' },
     { text: 'Trending', href: '/trending' },
-    { text: 'Movies', href: '/movies' },
     { text: 'Series', href: '/series' }
   ] as NavItem[]
 };

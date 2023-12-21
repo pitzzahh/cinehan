@@ -15,7 +15,7 @@
 </script>
 
 {#await $store.trendingMovies}
-	<div class="md:h-[75%]">
+	<div class="h-full md:h-[75%]">
 		<div class="relative md:h-[75%]">
 			<div class="h-full w-full rounded object-cover" />
 			<!-- Image -->
@@ -69,10 +69,10 @@
 					<div class="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
 					<div class="absolute bottom-0 left-0 text-xl text-white .scrollbar-hide">
 						<div class="mx-2 p-2">
-							<h1 class="mt-2 text-lg font-extrabold md:text-3xl lg:text-3xl">
+							<h1 class="mt-2 text-lg font-extrabold md:text-3xl lg:text-4xl">
 								{trendingMovie.title}
 							</h1>
-							<span class="mt-4 flex items-center">
+							<span class="mt-1 md:mt-4 flex items-center scrollbar-hide">
 								<Video class="mr-2 h-5 w-5 text-theme" />
 								<span class="text-sm md:text-lg">{trendingMovie.type}</span>
 								<Star class="mx-2 h-5 w-5 text-theme" />
@@ -88,7 +88,7 @@
 								{trendingMovie.description}
 							</span>
 							<div class="mt-4 flex space-x-2">
-								<a href="/movies/{trendingMovie.id}">
+								<a href="/{trendingMovie.id}">
 									<Button class="transition-all hover:bg-theme hover:text-theme-foreground">
 										<Play class="mr-1 h-4 w-4 md:h-5 md:w-5" /> Watch
 									</Button>
