@@ -78,7 +78,7 @@
 								<Star class="mx-2 h-5 w-5 text-theme" />
 								<span class="text-sm md:text-lg">{trendingMovie?.rating?.toFixed(1)}</span>
 								<Clock class="mx-2 h-5 w-5 text-theme" />
-								<span class="text-sm md:text-lg">{trendingMovie.duration}m</span>
+								<span class="text-sm md:text-lg">{trendingMovie.duration}</span>
 								<Calendar class="mx-2 h-5 w-5 text-theme" />
 								<span class="text-sm md:text-lg">{formatDate(trendingMovie.releaseDate)}</span>
 							</span>
