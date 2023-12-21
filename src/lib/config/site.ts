@@ -7,9 +7,6 @@ export const siteConfig = {
   keywords: `cinehan,sinehan,freemovie,streammovie`,
   navLinks: [
     { text: 'Home', href: '/' },
-    { text: 'Trending', href: '/trending' },
-    { text: 'Movies', href: '/movies' },
-    { text: 'Series', href: '/series' }
     { text: 'Movies', href: '/movie' },
     { text: 'TV Shows', href: '/tv' }
   ] as NavItem[]
