@@ -1,12 +1,6 @@
 <script lang="ts">
 	import * as Command from '$lib/components/ui/command';
-	import {
-		Home,
-		ChatBubble,
-		Video,
-		ListBullet,
-		Gear,
-		Person	} from 'radix-icons-svelte';
+	import { Home, ChatBubble, Video, ListBullet, Gear, Person } from 'radix-icons-svelte';
 	import { onMount } from 'svelte';
 	import { Icons } from '$lib/config/icons';
 	import { goto } from '$app/navigation';
@@ -18,6 +12,7 @@
 	import { store, fetchTrendingMovies } from '$lib';
 	import User from '$lib/config/icons/user.svelte';
 	import { Button } from '$lib/components/ui/button';
+	import { cn } from '$lib/utils';
 
 	let open = false;
 	let searchQuery: string;
@@ -61,8 +56,8 @@
 			{#each siteConfig.navLinks as link}
 				<Button
 					variant="ghost"
-					class={'hover:text-theme ' + $page.route && link.href === $page.route.id
-						? 'selectedLink font-bold transition-all'
+					class={'hover:font-bold hover:text-primary ' + $page.route && link.href === $page.route.id
+						? 'bg-primary font-bold transition-all'
 						: ''}
 					on:click={() => {
 						goto(link.href);
