@@ -63,6 +63,7 @@
 		<div class="hidden gap-6 md:flex">
 			{#each siteConfig.navLinks as link}
 				<button
+				class="hover:text-theme"
 					on:click={() => {
 						goto(link.href);
 						siteConfig.navLinks.forEach((e) => {
