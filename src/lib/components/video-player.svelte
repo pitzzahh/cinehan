@@ -14,7 +14,7 @@
 		player = Player.make('#oplayer', {
 			source: {
 				src: sources[0].url,
-				poster: data.movieInfo.cover
+				poster: data.movieInfo.cover?.replace('1200x600', '1920x1080')
 			},
 			autoplay: false
 		})

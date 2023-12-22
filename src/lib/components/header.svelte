@@ -53,7 +53,7 @@
 </script>
 
 <header
-	class="shadown-sm sticky top-0 z-50 mx-4 flex items-center justify-between bg-opacity-20 backdrop-blur"
+	class="shadown-sm sticky top-0 z-50 mx-4 flex items-center justify-between backdrop-blur-[10px]"
 >
 	<div class="flex items-center gap-1">
 		<Icons.logo on:click={() => goto('/')} />
@@ -168,7 +168,7 @@
 				<Command.Loading>Please wait</Command.Loading>
 			{:else}
 				{#each items as item}
-					<Command.Item>
+					<Command.Item value={item}>
 						{item}
 					</Command.Item>
 				{/each}
