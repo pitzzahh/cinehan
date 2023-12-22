@@ -61,7 +61,7 @@
 			<SplideSlide>
 				<div class="relative">
 					<img
-						class="w-auto object-cover object-top md:h-[37rem]"
+						class="w-full object-cover object-top md:h-[37rem]"
 						src={trendingMovie.cover?.replace('1200x600', '1920x1080')}
 						alt={trendingMovie.title.toString()}
 					/>
