@@ -6,11 +6,8 @@
 		ChatBubble,
 		Video,
 		ListBullet,
-		EnvelopeClosed,
 		Gear,
-		Person,
-		EnvelopeOpen
-	} from 'radix-icons-svelte';
+		Person	} from 'radix-icons-svelte';
 	import { onMount } from 'svelte';
 	import { Icons } from '$lib/config/icons';
 	import { goto } from '$app/navigation';
@@ -60,7 +57,7 @@
 >
 	<div class="flex items-center gap-1">
 		<Icons.logo on:click={() => goto('/')} />
-		<div class="hidden gap-6 md:flex">
+		<div class="ml-4 hidden gap-6 md:flex">
 			{#each siteConfig.navLinks as link}
 				<button
 					on:click={() => {
@@ -78,18 +75,17 @@
 			{/each}
 		</div>
 	</div>
-	<div class="flex h-14 items-center justify-between gap-1">
+	<div class="flex h-12 items-center justify-between gap-1">
 		<Button
 			variant="outline"
-			class="relative w-full justify-start text-sm text-muted-foreground md:pr-12 lg:w-64"
+			class="relative w-full text-sm text-muted-foreground md:w-60 md:justify-start"
 			on:click={() => (open = true)}
 			{...$$restProps}
 		>
-			<div>
-				<MagnifyingGlass class="mr-2 h-4 w-4" />
-			</div>
+			<MagnifyingGlass class="h-4 w-4 mr-1" />
+
 			<span class="hidden md:inline-flex"> Search movies... </span>
-			<span class="inline-flex md:hidden">Search...</span>
+			<span class="inline-flex md:hidden"> Search</span>
 			<kbd
 				class="pointer-events-none absolute right-1.5 top-1.5 hidden h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium opacity-100 md:flex"
 			>
@@ -97,16 +93,16 @@
 			</kbd>
 		</Button>
 
-		<Button class="hidden md:flex">
+		<Button>
 			<User class="h-4 w-4 md:mr-2" />
 			<span class="hidden md:flex">Login</span>
 		</Button>
 
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger asChild let:builder>
-				<Button builders={[builder]} class="w-10" variant="outline">
+				<Button builders={[builder]} variant="outline" size="icon">
 					<Sun
-						class="absolute h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
+						class="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0"
 					/>
 					<Moon
 						class="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100"

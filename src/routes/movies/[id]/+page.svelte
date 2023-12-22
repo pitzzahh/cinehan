@@ -1,8 +1,7 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import TrendingCarousel from '$lib/components/trending-carousel.svelte';
 
 	export let data: PageData;
 </script>
 
-<TrendingCarousel {data} />
+<p>{@html data}</p>
