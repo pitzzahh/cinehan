@@ -12,7 +12,7 @@ export const options: UiConfig = {
     showControls: 'always', // 'played'
     keyboard: { focused: true, global: false },
     settings: ['loop'],
-    theme: { primaryColor: '#FD3E01' },
+    theme: { primaryColor: '#EA580C' },
     slideToSeek: 'always', // 'always' | 'long-touch'
     topSetting: false, //show setting icon on appbar
 }
