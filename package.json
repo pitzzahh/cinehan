@@ -47,7 +47,6 @@
 		"@vercel/speed-insights": "^1.0.2",
 		"bits-ui": "^0.11.8",
 		"clsx": "^2.0.0",
-		"cmdk-sv": "^0.0.12",
 		"formsnap": "^0.4.1",
 		"hls.js": "^1.4.14",
 		"mode-watcher": "^0.1.2",
