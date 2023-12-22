@@ -7,7 +7,7 @@ export const store = writable({
     trendingTvShows: Promise.resolve([] as IMovieInfo[])
 })
 
-export let movieProvider = new MOVIES.FlixHQ()
+export let movieProvider = new MOVIES.MovieHdWatch()
 
 export const fetchTrendingMovies = async (): Promise<IMovieInfo[]> => {
     try {

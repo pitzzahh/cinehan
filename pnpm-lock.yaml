@@ -11,6 +11,9 @@ dependencies:
   '@oplayer/core':
     specifier: ^1.2.31
     version: 1.2.31
+  '@oplayer/hls':
+    specifier: ^1.2.23
+    version: 1.2.23(@oplayer/core@1.2.31)(hls.js@1.4.14)
   '@oplayer/ui':
     specifier: ^1.2.34
     version: 1.2.34(@oplayer/core@1.2.31)
@@ -32,6 +35,9 @@ dependencies:
   formsnap:
     specifier: ^0.4.1
     version: 0.4.1(svelte@4.2.8)(sveltekit-superforms@1.12.0)(zod@3.22.4)
+  hls.js:
+    specifier: ^1.4.14
+    version: 1.4.14
   mode-watcher:
     specifier: ^0.1.2
     version: 0.1.2(svelte@4.2.8)
@@ -687,6 +693,16 @@ packages:
 
   /@oplayer/core@1.2.31:
     resolution: {integrity: sha512-KBoTdwaqcCVxO3xi7C+Z/2fRtSKc5FT/6PzUb/x6+vVUfNzU6hlbMqNDUrOqyERZHC+GHkFKhl0LJ255hIAYHQ==}
+    dev: false
+
+  /@oplayer/hls@1.2.23(@oplayer/core@1.2.31)(hls.js@1.4.14):
+    resolution: {integrity: sha512-4tvfye2tD31vZkhSkGpMOEIM43dioZkd+20riIIep1Ot6/p+ZPgDVUKTo1XJB+anIOQXb4nUKywiYWT3Uwim+g==}
+    peerDependencies:
+      '@oplayer/core': '>=1.0.0'
+      hls.js: '*'
+    dependencies:
+      '@oplayer/core': 1.2.31
+      hls.js: 1.4.14
     dev: false
 
   /@oplayer/ui@1.2.34(@oplayer/core@1.2.31):
@@ -1959,6 +1975,10 @@ packages:
     engines: {node: '>= 0.4'}
     dependencies:
       function-bind: 1.1.2
+
+  /hls.js@1.4.14:
+    resolution: {integrity: sha512-UppQjyvPVclg+6t2KY/Rv03h0+bA5u6zwqVoz4LAC/L0fgYmIaCD7ZCrwe8WI1Gv01be1XL0QFsRbSdIHV/Wbw==}
+    dev: false
 
   /htmlparser2@8.0.2:
     resolution: {integrity: sha512-GYdjWKDkbRLkZ5geuHs5NY1puJ+PXwP7+fHPRz06Eirsb9ugf6d8kkXav6ADhcODhFFPMIXyxkxSuMf3D6NCFA==}
