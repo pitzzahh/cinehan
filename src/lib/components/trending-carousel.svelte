@@ -19,7 +19,7 @@
 		<div class="hidden h-full w-full md:inline-flex" />
 		<div class="row-start-1 mx-4 h-full text-xl text-white sm:row-start-2 md:row-start-3 md:mt-1">
 			<!-- Title -->
-			<Skeleton class="mt-2 h-10 md:w-44" />
+			<Skeleton class="mt-2 h-8 w-20 md:h-10 md:w-44" />
 			<div class="mt-4 flex items-center scrollbar-hide">
 				<Video class="mr-2 h-5 w-5 text-theme" />
 				<!-- Media Type -->
