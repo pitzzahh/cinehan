@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { Button } from './ui/button';
 	import * as Command from '$lib/components/ui/command';
 	import {
 		Home,
@@ -21,6 +20,7 @@
 	import { page } from '$app/stores';
 	import { store, fetchTrendingMovies } from '$lib';
 	import User from '$lib/config/icons/user.svelte';
+	import { Button } from '$lib/components/ui/button';
 
 	let open = false;
 	let searchQuery: string;
@@ -56,14 +56,17 @@
 </script>
 
 <header
-	class="shadown-sm sticky top-0 z-50 flex items-center justify-between bg-opacity-20 mx-4 backdrop-blur"
+	class="shadown-sm sticky top-0 z-50 mx-4 flex items-center justify-between bg-opacity-20 backdrop-blur"
 >
 	<div class="flex items-center gap-1">
 		<Icons.logo on:click={() => goto('/')} />
-		<div class="hidden gap-6 md:flex">
+		<div class="hidden gap-2 sm:flex">
 			{#each siteConfig.navLinks as link}
-				<button
-				class="hover:text-theme"
+				<Button
+					variant="ghost"
+					class={'hover:text-theme ' + $page.route && link.href === $page.route.id
+						? 'selectedLink font-bold transition-all'
+						: ''}
 					on:click={() => {
 						goto(link.href);
 						siteConfig.navLinks.forEach((e) => {
@@ -73,8 +76,7 @@
 						if (link.href === '/') {
 							$store.trendingMovies = fetchTrendingMovies();
 						}
-					}}
-					class:selectedLink={$page.route && link.href === $page.route.id}>{link.text}</button
+					}}>{link.text}</Button
 				>
 			{/each}
 		</div>
@@ -82,7 +84,7 @@
 	<div class="flex h-14 items-center justify-between gap-1">
 		<Button
 			variant="outline"
-			class="relative w-full justify-start text-sm text-muted-foreground md:pr-12 lg:w-64"
+			class="relative w-full justify-start text-sm text-muted-foreground sm:w-64 sm:pr-12"
 			on:click={() => (open = true)}
 			{...$$restProps}
 		>
@@ -98,9 +100,9 @@
 			</kbd>
 		</Button>
 
-		<Button class="hidden md:flex">
+		<Button>
 			<User class="h-4 w-4 md:mr-2" />
-			<span class="hidden md:flex">Login</span>
+			<span class="hidden sm:flex">Login</span>
 		</Button>
 
 		<DropdownMenu.Root>
