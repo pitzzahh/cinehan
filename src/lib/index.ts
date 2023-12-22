@@ -7,6 +7,7 @@ export const store = writable({
     trendingTvShows: Promise.resolve([] as IMovieInfo[])
 })
 
+export let host = 'https://cinehan.vercel.app'
 export let movieProvider = new MOVIES.MovieHdWatch()
 
 export const fetchTrendingMovies = async (): Promise<IMovieInfo[]> => {

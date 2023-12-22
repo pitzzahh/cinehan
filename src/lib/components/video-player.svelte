@@ -15,7 +15,7 @@
 			source: {
 				src: sources[0].url,
 				poster: data.movieInfo.cover
-			},  
+			},
 			autoplay: false
 		})
 			.use([
@@ -55,13 +55,6 @@
 			player.destroy();
 		}
 	});
-
-	$: poster = data.movieInfo.image?.replaceAll('250x400', '3840x2160');
-
 </script>
 
-<section>
-	<div class="h-[75%] rounded-md">
-		<div id="oplayer" class="h-[75%] w-full object-cover" />
-	</div>
-</section>
+<span id="oplayer" class="md:h-[37rem]"/>
