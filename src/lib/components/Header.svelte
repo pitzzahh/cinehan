@@ -53,7 +53,7 @@
 </script>
 
 <header
-	class="shadown-sm sticky top-0 z-50 flex items-center justify-between bg-opacity-20 px-4 backdrop-blur"
+	class="shadown-sm sticky top-0 z-50 flex items-center justify-between bg-opacity-20 mx-4 backdrop-blur"
 >
 	<div class="flex items-center gap-1">
 		<Icons.logo on:click={() => goto('/')} />
@@ -67,7 +67,7 @@
 						});
 						link.selected = true;
 						if (link.href === '/') {
-							$store.trendingMovies = fetchTrendingMovies(import.meta.env.VITE_TMDB_API_KEY);
+							$store.trendingMovies = fetchTrendingMovies();
 						}
 					}}
 					class:selectedLink={$page.route && link.href === $page.route.id}>{link.text}</button

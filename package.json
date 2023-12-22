@@ -40,6 +40,8 @@
 	"type": "module",
 	"dependencies": {
 		"@consumet/extensions": "^1.5.4",
+		"@oplayer/core": "^1.2.31",
+		"@oplayer/ui": "^1.2.34",
 		"@splidejs/svelte-splide": "^0.2.9",
 		"@vercel/speed-insights": "^1.0.2",
 		"bits-ui": "^0.11.8",
