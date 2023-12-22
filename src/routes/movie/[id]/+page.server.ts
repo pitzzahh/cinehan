@@ -3,8 +3,8 @@ import type { IMovieEpisode, IMovieInfo } from '@consumet/extensions';
 import type { PageServerLoad } from './$types';
 
 export const load = (async ({ params }) => {
-    console.log(`Params: ${JSON.stringify(params)}`)
     const movieId = `movie/${params.id}`
+    console.log(`Params: ${JSON.stringify(movieId)}`)
     const result: IMovieInfo = await movieProvider.fetchMediaInfo(movieId)
     const episodes = result?.episodes as IMovieEpisode[]
     return {
