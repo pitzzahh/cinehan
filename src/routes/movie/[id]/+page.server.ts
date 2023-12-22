@@ -10,6 +10,6 @@ export const load = (async ({ params }) => {
     return {
         movieInfo: result,
         episodes,
-        sources: (await movieProvider.fetchEpisodeSources(episodes[0].id, movieId)).sources
+        sources: (await movieProvider.fetchEpisodeSources(episodes[0].id, movieId))
     };
 }) satisfies PageServerLoad;
