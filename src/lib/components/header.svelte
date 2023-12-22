@@ -5,11 +5,8 @@
 		ChatBubble,
 		Video,
 		ListBullet,
-		EnvelopeClosed,
 		Gear,
-		Person,
-		EnvelopeOpen
-	} from 'radix-icons-svelte';
+		Person	} from 'radix-icons-svelte';
 	import { onMount } from 'svelte';
 	import { Icons } from '$lib/config/icons';
 	import { goto } from '$app/navigation';
