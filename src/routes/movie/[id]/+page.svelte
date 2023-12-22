@@ -19,5 +19,5 @@
 
 <section>
 	<VideoPlayer {data} />
-	<MediaDescription mediaInfo={data.movieInfo} />
+	<MediaDescription {data} />
 </section>

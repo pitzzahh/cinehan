@@ -20,22 +20,22 @@
 		<div class="row-start-1 mx-4 h-full text-xl text-white sm:row-start-2 md:row-start-3 md:mt-1">
 			<!-- Title -->
 			<Skeleton class="mt-2 h-8 w-20 md:h-10 md:w-44" />
-			<div class="mt-4 flex items-center scrollbar-hide">
-				<Video class="mr-2 h-5 w-5 text-theme" />
+			<div class="mt-4 flex items-center">
+				<Video class="text-theme mr-2 h-5 w-5" />
 				<!-- Media Type -->
 				<Skeleton class="h-4 w-10 md:h-5 md:w-14" />
-				<Star class="mx-2 h-5 w-5 text-theme" />
+				<Star class="text-theme mx-2 h-5 w-5" />
 				<!-- Rating -->
 				<Skeleton class="h-4 w-10 md:h-5 md:w-14" />
-				<Clock class="mx-2 h-5 w-5 text-theme" />
+				<Clock class="text-theme mx-2 h-5 w-5" />
 				<!-- Runtime -->
 				<Skeleton class="h-4 w-10 md:h-5 md:w-14" />
-				<Calendar class="mx-2 h-5 w-5 text-theme" />
+				<Calendar class="text-theme mx-2 h-5 w-5" />
 				<!-- Release Data -->
 				<Skeleton class="h-4 w-10 md:h-5 md:w-14" />
 			</div>
 			<Skeleton class="mt-2 h-10 w-auto" />
-			<div class="mb-1 mt-4 flex space-x-2">
+			<div class="mb-1 mt-4 flex space-x-2 pb-1">
 				<Skeleton class="mr-1 h-10 w-16" />
 				<Skeleton class="mr-1 h-10 w-16" />
 			</div>
@@ -65,19 +65,19 @@
 						src={trendingMovie.cover?.replace('1200x600', '1920x1080')}
 						alt={trendingMovie.title.toString()}
 					/>
-					<div class="absolute inset-0 bg-gradient-to-t from-black from-20% to-transparent" />
+					<div class="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
 					<div class="absolute bottom-0 left-0 p-2 text-xl text-white scrollbar-hide md:p-4">
 						<h1 class="text-lg font-extrabold md:text-3xl lg:text-4xl">
 							{trendingMovie.title}
 						</h1>
 						<span class="flex items-center scrollbar-hide md:mt-4">
-							<Video class="mr-2 h-5 w-5 text-theme" />
+							<Video class="text-theme mr-2 h-5 w-5" />
 							<span class="text-sm md:text-lg">{trendingMovie.type}</span>
-							<Star class="mx-2 h-5 w-5 text-theme" />
+							<Star class="text-theme mx-2 h-5 w-5" />
 							<span class="text-sm md:text-lg">{trendingMovie?.rating?.toFixed(1)}</span>
-							<Clock class="mx-2 h-5 w-5 text-theme" />
+							<Clock class="text-theme mx-2 h-5 w-5" />
 							<span class="text-sm md:text-lg">{trendingMovie.duration}</span>
-							<Calendar class="mx-2 h-5 w-5 text-theme" />
+							<Calendar class="text-theme mx-2 h-5 w-5" />
 							<span class="text-sm md:text-lg">{formatDate(trendingMovie.releaseDate)}</span>
 						</span>
 						<span class="mt-2 line-clamp-2 overflow-hidden text-ellipsis text-sm md:text-lg">
@@ -85,12 +85,12 @@
 						</span>
 						<div class="mt-4 flex space-x-2">
 							<a href="/{trendingMovie.id}">
-								<Button class="transition-all hover:bg-theme hover:text-theme-foreground">
+								<Button>
 									<Play class="mr-1 h-4 w-4 md:h-5 md:w-5" /> Watch
 								</Button>
 							</a>
 							<a href="/">
-								<Button class="transition-all hover:bg-theme hover:text-theme-foreground">
+								<Button>
 									<Star class="mr-1 h-4 w-4 md:h-5 md:w-5" /> Rate
 								</Button>
 							</a>
