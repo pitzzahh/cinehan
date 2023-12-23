@@ -4,7 +4,9 @@ import { error } from '@sveltejs/kit';
 
 export const store = writable({
     trendingMovies: Promise.resolve([] as IMovieInfo[]),
-    trendingTvShows: Promise.resolve([] as IMovieInfo[])
+    trendingTvShows: Promise.resolve([] as IMovieInfo[]),
+    cannotRate: true,
+    cannotDownload: true
 })
 
 export let host = 'https://cinehan.vercel.app'
