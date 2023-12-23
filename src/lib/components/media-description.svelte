@@ -3,11 +3,28 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Badge } from '$lib/components/ui/badge';
 	import * as Tooltip from '$lib/components/ui/tooltip';
+	import { Reload } from 'radix-icons-svelte';
 	import { Separator } from '$lib/components/ui/separator';
 	import type { PageData } from '../../routes/movie/[id]/$types';
-	import { goto } from '$app/navigation';
+	import { store } from '$lib';
+	// import HLSDownloader from 'hlsdownloader';
+
 	export let data: PageData;
 	let { movieInfo, sources } = data;
+	$: isRequestingForDownload = false;
+
+	const download = () => {
+		const source = sources.sources;
+		console.log(`Downloading`);
+		// const downloader = new HLSDownloader({
+		// 	playlistURL: source[0].url
+		// });
+		// isRequestingForDownload = true;
+		// downloader.startDownload((err: any, msg: any) => {
+		// 	(err ? console.log(err) : console.log(msg))
+		// });
+		isRequestingForDownload = false;
+	};
 </script>
 
 {#if movieInfo}
@@ -15,7 +32,7 @@
 		class="light-theme m-4 grid auto-cols-auto auto-rows-auto gap-2 rounded-md p-4 text-primary-foreground dark:text-secondary-foreground"
 	>
 		<div class="md:col-start-1">
-			<span class="text-2xl font-bold">{movieInfo.title}</span>
+			<span class="mb-2 text-2xl font-bold">{movieInfo.title}</span>
 			<p class="text-slate-100">{movieInfo.description}</p>
 		</div>
 		<Separator class="my-2 md:mx-2 md:h-full md:w-[1px]" orientation="horizontal" />
@@ -62,12 +79,18 @@
 					<Button
 						builders={[builder]}
 						variant="outline"
-						class="w-full transition-all hover:bg-primary"
-						on:click={() => {
-							goto(`/${movieInfo.id}/download`);
-						}}
+						class={`w-full transition-all ${
+							$store.cannotDownload
+								? 'hover:cursor-not-allowed focus:cursor-not-allowed'
+								: 'hover:bg-primary'
+						}`}
+						on:click={download}
 					>
-						<Download class="mr-2 h-4 w-4" />
+						{#if isRequestingForDownload}
+							<Reload class="mr-2 h-4 w-4 animate-spin" />
+						{:else}
+							<Download class="mr-2 h-4 w-4" />
+						{/if}
 						Download</Button
 					>
 				</Tooltip.Trigger>
