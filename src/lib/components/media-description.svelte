@@ -77,13 +77,10 @@
 			<Tooltip.Root>
 				<Tooltip.Trigger asChild let:builder>
 					<Button
+						disabled={$store.cannotDownload || isRequestingForDownload}
 						builders={[builder]}
 						variant="outline"
-						class={`w-full transition-all ${
-							$store.cannotDownload
-								? 'hover:cursor-not-allowed focus:cursor-not-allowed'
-								: 'hover:bg-primary'
-						}`}
+						class="w-full transition-all hover:bg-primary"
 						on:click={download}
 					>
 						{#if isRequestingForDownload}
