@@ -1,5 +1,9 @@
 <script lang="ts">
 	import * as Command from '$lib/components/ui/command';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import * as Avatar from '$lib/components/ui/avatar';
+	import * as AlertDialog from '$lib/components/ui/alert-dialog';
+	import { Button } from '$lib/components/ui/button';
 	import { Home, ChatBubble, Video, ListBullet, Gear, Person } from 'radix-icons-svelte';
 	import { onMount } from 'svelte';
 	import { Icons } from '$lib/config/icons';
@@ -7,13 +11,12 @@
 	import { siteConfig } from '$lib/config/site';
 	import { Sun, Moon, MagnifyingGlass } from 'radix-icons-svelte';
 	import { setMode, resetMode } from 'mode-watcher';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { page } from '$app/stores';
 	import { store, fetchTrendingMovies } from '$lib';
 	import User from '$lib/config/icons/user.svelte';
-	import { Button } from '$lib/components/ui/button';
-	
+
 	let open = false;
+	let isLoggingOut = false;
 	let searchQuery: string;
 	let loading = false;
 	let items: string[] = [];
@@ -40,10 +43,14 @@
 		};
 	});
 
-	function runCommand(cmd: () => void) {
+	const logout = () => {
+		isLoggingOut = true;
+	};
+
+	const runCommand = (cmd: () => void) => {
 		open = false;
 		cmd();
-	}
+	};
 </script>
 
 <header
@@ -91,11 +98,32 @@
 			</kbd>
 		</Button>
 
-		<Button>
-			<User class="h-4 w-4 md:mr-2" />
-			<span class="hidden sm:flex">Login</span>
-		</Button>
-
+		{#if $store.isLoggedIn}
+			<DropdownMenu.Root>
+				<DropdownMenu.Trigger asChild let:builder>
+					<Button builders={[builder]} variant="ghost" class="h-8 w-8 rounded-full ">
+						<Avatar.Root class="h-8 w-8">
+							<Avatar.Image src="https://github.com/pitzzahh.png" alt="@pitzzahh" />
+							<Avatar.Fallback>User</Avatar.Fallback>
+						</Avatar.Root>
+					</Button>
+				</DropdownMenu.Trigger>
+				<DropdownMenu.Content>
+					<DropdownMenu.Group>
+						<DropdownMenu.Label>My Account</DropdownMenu.Label>
+						<DropdownMenu.Separator />
+						<DropdownMenu.Item>Profile</DropdownMenu.Item>
+						<DropdownMenu.Item>Settings</DropdownMenu.Item>
+						<DropdownMenu.Item on:click={logout}>Logout</DropdownMenu.Item>
+					</DropdownMenu.Group>
+				</DropdownMenu.Content>
+			</DropdownMenu.Root>
+		{:else}
+			<Button on:click={() => ($store.isLoggedIn = true)}>
+				<User class="h-4 w-4 md:mr-2" />
+				<span class="hidden sm:flex">Login</span>
+			</Button>
+		{/if}
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger asChild let:builder>
 				<Button builders={[builder]} class="w-10" variant="outline">
@@ -170,3 +198,15 @@
 		</Command.Group>
 	</Command.List>
 </Command.Dialog>
+
+<AlertDialog.Root bind:open={isLoggingOut}>
+	<AlertDialog.Content>
+		<AlertDialog.Header>
+			<AlertDialog.Title>Are you sure you want to logout?</AlertDialog.Title>
+		</AlertDialog.Header>
+		<AlertDialog.Footer>
+			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+			<AlertDialog.Action on:click={() => ($store.isLoggedIn = false)}>Logout</AlertDialog.Action>
+		</AlertDialog.Footer>
+	</AlertDialog.Content>
+</AlertDialog.Root>
