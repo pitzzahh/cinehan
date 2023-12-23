@@ -12,8 +12,7 @@
 	import { store, fetchTrendingMovies } from '$lib';
 	import User from '$lib/config/icons/user.svelte';
 	import { Button } from '$lib/components/ui/button';
-	import { cn } from '$lib/utils';
-
+	
 	let open = false;
 	let searchQuery: string;
 	let loading = false;
@@ -52,7 +51,7 @@
 >
 	<div class="flex items-center gap-1">
 		<Icons.logo on:click={() => goto('/')} />
-		<div class="hidden gap-2 sm:flex">
+		<div class="hidden gap-2 md:flex">
 			{#each siteConfig.navLinks as link}
 				<Button
 					variant="ghost"
@@ -76,7 +75,7 @@
 	<div class="flex h-14 items-center justify-between gap-1">
 		<Button
 			variant="outline"
-			class="relative w-full justify-start text-sm text-muted-foreground sm:w-64 sm:pr-12"
+			class="relative w-full justify-start text-sm text-muted-foreground sm:w-64 md:pr-12"
 			on:click={() => (open = true)}
 			{...$$restProps}
 		>
