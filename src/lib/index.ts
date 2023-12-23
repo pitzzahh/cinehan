@@ -6,6 +6,7 @@ export const store = writable({
     trendingMovies: Promise.resolve([] as IMovieInfo[]),
     trendingTvShows: Promise.resolve([] as IMovieInfo[]),
     cannotRate: true,
+    isLoggedIn: false,
     cannotDownload: true
 })
 
