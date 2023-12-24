@@ -2,9 +2,6 @@
 	"name": "cinehan",
 	"version": "0.0.1",
 	"private": true,
-	"engines": {
-		"node": ">=18.13.0"
-	},
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
@@ -18,7 +15,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
-		"@sveltejs/kit": "^2.0.6",
+		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
