@@ -5,7 +5,7 @@
 	import OUI, { type Setting } from '@oplayer/ui';
 	import { options } from '$lib/config/video-player';
 	import OHls from '@oplayer/hls';
-	import type { IEpisodeServer, ISource } from '@consumet/extensions';
+	import type { IEpisodeServer, ISource, IVideo } from '@consumet/extensions';
 	export let episodeId: string;
 	export let mediaId: string;
 	export let dataSource: ISource;
@@ -61,22 +61,39 @@
 								default: server.name
 							})) as Setting<any>[],
 							async onChange({ name, value }) {
-								console.log(`Server changed to ${name} with url ${value}}`);
-								const response: Response = await fetch(`${$page.url.host}/api/mediaInfo`, {
-									method: 'POST',
-									headers: {
-										'Content-Type': 'application/json'
-									},
-									body: JSON.stringify({ episodeId, mediaId, name })
-								});
-								console.log(`Response : ${JSON.stringify(response)}`);
-								if (response.ok) {
-									const res: Setting<any> = await response.json();
-									player.changeSource({ src: value });
-									player.changeQuality({ src: res.value });
-									console.log(`Source url changed to ${res.value}`);
-								} else {
-									console.log(`Error : ${response.statusText}`);
+								try {
+									const data = {
+										episodeId,
+										mediaId,
+										name
+									};
+									const response = await fetch(
+										`${$page.url.protocol}//${$page.url.host}/api/mediaInfo`,
+										{
+											method: 'POST',
+											headers: {
+												'Content-Type': 'application/json'
+											},
+											body: JSON.stringify(data)
+										}
+									);
+
+									if (response.ok) {
+										const res = await response.json();
+										qualities = res.sources.map((video: IVideo) => ({
+											name: video.quality,
+											value: video.url,
+											default: video.quality === 'auto'
+										})) as Setting<any>[];
+										const defaultQuality = qualities.find((q) => q.name === 'auto')?.value;
+										player.changeSource({ src: value });
+										player.changeQuality({ src: defaultQuality });
+										console.log(`Source URL changed to ${defaultQuality}`);
+									} else {
+										console.log(`Error response: ${response.statusText}`);
+									}
+								} catch (error) {
+									console.error('An error occurred during the fetch:', error);
 								}
 							}
 						}
