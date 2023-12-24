@@ -65,7 +65,7 @@
 			gap: '1rem'
 		}}
 	>
-		{#each trendingMovies as trendingMovie}
+		{#each [...trendingMovies].sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0)) as trendingMovie}
 			<SplideSlide>
 				<div class="relative">
 					<img
