@@ -1,10 +1,10 @@
-import { getStreamingServer, movieProvider } from '$lib';
-import type { RequestHandler } from '@sveltejs/kit';
+import type { RequestHandler } from './$types';
+import { movieProvider, getStreamingServer } from '$lib';
 
 export const POST: RequestHandler = async ({ request }) => {
-    const { episodeId, mediaId, server } = await request.json()
-    console.log(`Info params: ${JSON.stringify(episodeId, mediaId)}`)
-    const result = await movieProvider.fetchEpisodeSources(episodeId, mediaId, getStreamingServer(server));
+    const requestBody = await request.json()
+    console.log(`Request body: ${JSON.stringify(requestBody)}`)
+    const result = await movieProvider.fetchEpisodeSources(requestBody.episodeId, requestBody.mediaId, getStreamingServer(requestBody.name));
     const qualities = result.sources.map((source) => ({
         name: source.quality,
         value: source.url,
