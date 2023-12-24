@@ -4,7 +4,7 @@ import type { RequestHandler } from '@sveltejs/kit';
 export const POST: RequestHandler = async ({ request }) => {
     const { episodeId, mediaId, server } = await request.json()
     console.log(`Info params: ${JSON.stringify(episodeId, mediaId)}`)
-    const result = await movieProvider.fetchEpisodeSources(episodeId, mediaId, getStreamingServer(server.toLowerCase()));
+    const result = await movieProvider.fetchEpisodeSources(episodeId, mediaId, getStreamingServer(server));
     const qualities = result.sources.map((source) => ({
         name: source.quality,
         value: source.url,
