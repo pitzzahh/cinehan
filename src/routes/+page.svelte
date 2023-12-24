@@ -1,12 +1,12 @@
 <script lang="ts">
 	import type { PageData } from './$types';
 	import TrendingCarousel from '$lib/components/trending-carousel.svelte';
-	import { host } from '$lib';
+	import { page } from '$app/stores';
 	export let data: PageData;
 	export let pageTitle = 'Cinehan: Stream movies and Tv Shows';
 	export let pageDescription =
 		'Watch movies & tv shows on our platform. Enjoy high-quality videos and more.';
-	export let pageUrl = host;
+	export let pageUrl = $page.url.host;
 </script>
 
 <svelte:head>

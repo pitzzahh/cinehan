@@ -1,49 +1,23 @@
 <script lang="ts">
-	import * as Command from '$lib/components/ui/command';
-	import { Home, ChatBubble, Video, ListBullet, Gear, Person } from 'radix-icons-svelte';
-	import { onMount } from 'svelte';
+	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
+	import * as Avatar from '$lib/components/ui/avatar';
+	import * as AlertDialog from '$lib/components/ui/alert-dialog';
+	import { Button } from '$lib/components/ui/button';
 	import { Icons } from '$lib/config/icons';
 	import { goto } from '$app/navigation';
 	import { siteConfig } from '$lib/config/site';
 	import { Sun, Moon, MagnifyingGlass } from 'radix-icons-svelte';
 	import { setMode, resetMode } from 'mode-watcher';
-	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import { page } from '$app/stores';
 	import { store, fetchTrendingMovies } from '$lib';
 	import User from '$lib/config/icons/user.svelte';
-	import { Button } from '$lib/components/ui/button';
-	
-	let open = false;
-	let searchQuery: string;
-	let loading = false;
-	let items: string[] = [];
+	import SearchDialog from '$lib/components/search-dialog.svelte';
 
-	$: console.log(`SEARCH: ${searchQuery}`);
+	let isLoggingOut = false;
 
-	onMount(() => {
-		function handleKeydown(e: KeyboardEvent) {
-			if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-				e.preventDefault();
-				open = true;
-			}
-		}
-		document.addEventListener('keydown', handleKeydown);
-
-		loading = true;
-
-		items = ['First Item', 'Second Item'];
-
-		loading = false;
-
-		return () => {
-			document.removeEventListener('keydown', handleKeydown);
-		};
-	});
-
-	function runCommand(cmd: () => void) {
-		open = false;
-		cmd();
-	}
+	const logout = () => {
+		isLoggingOut = true;
+	};
 </script>
 
 <header
@@ -60,10 +34,6 @@
 						: ''}
 					on:click={() => {
 						goto(link.href);
-						siteConfig.navLinks.forEach((e) => {
-							e.selected = false;
-						});
-						link.selected = true;
 						if (link.href === '/') {
 							$store.trendingMovies = fetchTrendingMovies();
 						}
@@ -76,7 +46,7 @@
 		<Button
 			variant="outline"
 			class="relative w-full justify-start text-sm text-muted-foreground sm:w-64 md:pr-12"
-			on:click={() => (open = true)}
+			on:click={() => ($store.openSearchBar = true)}
 			{...$$restProps}
 		>
 			<div>
@@ -91,11 +61,32 @@
 			</kbd>
 		</Button>
 
-		<Button>
-			<User class="h-4 w-4 md:mr-2" />
-			<span class="hidden sm:flex">Login</span>
-		</Button>
-
+		{#if $store.isLoggedIn}
+			<DropdownMenu.Root>
+				<DropdownMenu.Trigger asChild let:builder>
+					<Button builders={[builder]} variant="ghost" class="h-8 w-8 rounded-full ">
+						<Avatar.Root class="h-8 w-8">
+							<Avatar.Image src="https://github.com/pitzzahh.png" alt="@pitzzahh" />
+							<Avatar.Fallback>User</Avatar.Fallback>
+						</Avatar.Root>
+					</Button>
+				</DropdownMenu.Trigger>
+				<DropdownMenu.Content>
+					<DropdownMenu.Group>
+						<DropdownMenu.Label>My Account</DropdownMenu.Label>
+						<DropdownMenu.Separator />
+						<DropdownMenu.Item>Profile</DropdownMenu.Item>
+						<DropdownMenu.Item>Settings</DropdownMenu.Item>
+						<DropdownMenu.Item on:click={logout}>Logout</DropdownMenu.Item>
+					</DropdownMenu.Group>
+				</DropdownMenu.Content>
+			</DropdownMenu.Root>
+		{:else}
+			<Button on:click={() => ($store.isLoggedIn = true)}>
+				<User class="h-4 w-4 md:mr-2" />
+				<span class="hidden sm:flex">Login</span>
+			</Button>
+		{/if}
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger asChild let:builder>
 				<Button builders={[builder]} class="w-10" variant="outline">
@@ -117,56 +108,16 @@
 	</div>
 </header>
 
-<Command.Dialog bind:open>
-	<Command.Input
-		placeholder="Type a command or search..."
-		on:change={(e) => {
-			console.log(`INPUT`);
-			console.log(JSON.stringify(e));
-		}}
-	/>
-	<Command.List>
-		<Command.Empty>No results found.</Command.Empty>
-		<Command.Group heading="Suggestions">
-			<Command.Item value="Home" onSelect={() => runCommand(() => goto('/'))}>
-				<Home class="mr-2 h-4 w-4" />
-				<span>Home</span>
-			</Command.Item>
-			<Command.Item value="Trending" onSelect={() => runCommand(() => goto('/trending'))}>
-				<ChatBubble class="mr-2 h-4 w-4" />
-				<span>Trending</span>
-			</Command.Item>
-			<Command.Item value="Movies" onSelect={() => runCommand(() => goto('/movies'))}>
-				<Video class="mr-2 h-4 w-4" />
-				<span>Movies</span>
-			</Command.Item>
-			<Command.Item value="Series" onSelect={() => runCommand(() => goto('/series'))}>
-				<ListBullet class="mr-2 h-4 w-4" />
-				<span>Series</span>
-			</Command.Item>
-			<Command.Separator />
-			<Command.Item>
-				<Person class="mr-2 h-4 w-4" />
-				<span>Profile</span>
-				<Command.Shortcut>⌘P</Command.Shortcut>
-			</Command.Item>
-			<Command.Item>
-				<Gear class="mr-2 h-4 w-4" />
-				<span>Settings</span>
-				<Command.Shortcut>⌘S</Command.Shortcut>
-			</Command.Item>
-		</Command.Group>
-		<Command.Separator />
-		<Command.Group heading="Results">
-			{#if searchQuery}
-				<Command.Loading>Please wait</Command.Loading>
-			{:else}
-				{#each items as item}
-					<Command.Item value={item}>
-						{item}
-					</Command.Item>
-				{/each}
-			{/if}
-		</Command.Group>
-	</Command.List>
-</Command.Dialog>
+<SearchDialog />
+
+<AlertDialog.Root bind:open={isLoggingOut}>
+	<AlertDialog.Content>
+		<AlertDialog.Header>
+			<AlertDialog.Title>Are you sure you want to logout?</AlertDialog.Title>
+		</AlertDialog.Header>
+		<AlertDialog.Footer>
+			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+			<AlertDialog.Action on:click={() => ($store.isLoggedIn = false)}>Logout</AlertDialog.Action>
+		</AlertDialog.Footer>
+	</AlertDialog.Content>
+</AlertDialog.Root>

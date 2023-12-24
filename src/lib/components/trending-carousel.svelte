@@ -11,7 +11,12 @@
 
 	export let data: PageData;
 
-	onMount(async () => ($store.trendingMovies = data.streamed.trendingMovies));
+	onMount(async () => {
+		$store.trendingMovies = data.streamed.trendingMovies;
+		console.log(`Slide: ${$store.lastShownSlide}`);
+	});
+
+	$: console.log(`Current slide: ${$store.lastShownSlide}`);
 </script>
 
 {#await $store.trendingMovies}
@@ -43,9 +48,12 @@
 	</div>
 {:then trendingMovies}
 	<Splide
+		on:moved={(e) => ($store.lastShownSlide = e?.detail.index ?? 0)}
 		aria-label="Trending Movies"
+		aria-live="polite"
 		options={{
 			type: 'loop',
+			start: $store.lastShownSlide,
 			pauseOnHover: true,
 			pauseOnFocus: true,
 			keyboard: 'global',
@@ -57,7 +65,7 @@
 			gap: '1rem'
 		}}
 	>
-		{#each trendingMovies as trendingMovie}
+		{#each [...trendingMovies].sort((a, b) => (b.rating ?? 0) - (a.rating ?? 0)) as trendingMovie}
 			<SplideSlide>
 				<div class="relative">
 					<img
@@ -73,16 +81,22 @@
 						<span class="flex items-center scrollbar-hide md:mt-4">
 							<Video class="mr-2 h-5 w-5 text-primary" />
 							<span class="text-sm md:text-lg">{trendingMovie.type}</span>
-							<Star class="mx-2 h-5 w-5 text-primary" />
-							<span class="text-sm md:text-lg">{trendingMovie?.rating?.toFixed(1)}</span>
+							{#if trendingMovie.rating}
+								<Star class="mx-2 h-5 w-5 text-primary" />
+								<span class="text-sm md:text-lg">{trendingMovie?.rating?.toFixed(1)}</span>
+							{/if}
 							<Clock class="mx-2 h-5 w-5 text-primary" />
 							<span class="text-sm md:text-lg">{trendingMovie.duration}</span>
 							<Calendar class="mx-2 h-5 w-5 text-primary" />
 							<span class="text-sm md:text-lg">{formatDate(trendingMovie.releaseDate)}</span>
 						</span>
-						<span class="mt-2 line-clamp-2 overflow-hidden text-ellipsis text-sm md:text-lg">
-							{trendingMovie.description}
-						</span>
+
+						{#if trendingMovie.description}
+							<span class="mt-2 line-clamp-2 overflow-hidden text-ellipsis text-sm md:text-lg">
+								{trendingMovie.description}
+							</span>
+						{/if}
+
 						<div class="mt-4 flex space-x-2">
 							<a href="/{trendingMovie.id}">
 								<Button>

@@ -1,5 +1,5 @@
 <footer
-	class="light-theme grid grid-rows-2 place-items-center p-4 text-primary-foreground dark:text-secondary-foreground"
+	class="bg-theme dark:bg-theme-dark_bg grid grid-rows-2 place-items-center p-4 text-primary-foreground dark:text-primary-foreground"
 >
 	<span class="text-md font-bold">Notice to viewers</span>
 	<span class="text-center text-sm"

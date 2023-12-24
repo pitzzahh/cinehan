@@ -1,5 +1,7 @@
 import Logo from './logo.svelte';
+import User from './user.svelte';
 
 export const Icons = {
-    logo: Logo
+    logo: Logo,
+    user: User,
 }

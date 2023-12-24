@@ -1,8 +1,11 @@
 <script lang="ts">
-	import MediaDescription from '$lib/components/media-description.svelte';
+	import { Reload, ExclamationTriangle } from 'radix-icons-svelte';
+	import { Button } from '$lib/components/ui/button';
+	import { page } from '$app/stores';
+	import { Skeleton } from '$lib/components/ui/skeleton';
 	import VideoPlayer from '$lib/components/video-player.svelte';
-	import type { PageData } from './$types';
-	export let data: PageData;
+	import type { LayoutData } from './$types';
+	export let data: LayoutData;
 </script>
 
 <svelte:head>
@@ -17,7 +20,35 @@
 	/>
 </svelte:head>
 
-<section>
-	<VideoPlayer {data} />
-	<MediaDescription {data} />
-</section>
+{#await data.videoPlayerData}
+	<div class="relative md:h-[37rem]">
+		<Skeleton class="h-[18rem] w-full md:h-[37rem]" />
+		<div
+			class="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform items-center"
+		>
+			<Reload class="mr-2 h-4 w-4 animate-spin" />
+			<span class="text-xl font-bold">Please Wait...</span>
+		</div>
+	</div>
+{:then result}
+	<VideoPlayer
+		episodeId={result[0]}
+		mediaId={result[1]}
+		dataSource={result[2]}
+		servers={result[3]}
+		coverUrl={data.movieInfo.cover}
+	/>
+{:catch error}
+	<div class="relative md:h-[37rem]">
+		<Skeleton class="h-[18rem] w-full md:h-[37rem]" />
+		<div
+			class="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform items-center"
+		>
+			<ExclamationTriangle class="mr-2 h-4 w-4 " />
+			<span class="text-xl font-bold w-full">{error.message}</span>
+			<Button href={$page.url?.toString() ?? '/'} on:click={() => location.reload()}
+				>Retry</Button
+			>
+		</div>
+	</div>
+{/await}

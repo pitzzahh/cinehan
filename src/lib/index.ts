@@ -1,16 +1,26 @@
 import { writable } from 'svelte/store';
-import { MOVIES, META, type IMovieResult, type IMovieInfo, type ISearch } from '@consumet/extensions';
+import { MOVIES, type IMovieResult, type IMovieInfo, StreamingServers } from '@consumet/extensions';
 import { error } from '@sveltejs/kit';
 
 export const store = writable({
     trendingMovies: Promise.resolve([] as IMovieInfo[]),
     trendingTvShows: Promise.resolve([] as IMovieInfo[]),
     cannotRate: true,
+    openSearchBar: false,
+    lastShownSlide: 0,
+    isLoggedIn: false,
     cannotDownload: true
 })
 
-export let host = 'https://cinehan.vercel.app'
 export let movieProvider = new MOVIES.MovieHdWatch()
+
+export const getStreamingServer = (value: string): StreamingServers | undefined => {
+    for (const key in StreamingServers) {
+        if (StreamingServers[key as keyof typeof StreamingServers] === value) {
+            return StreamingServers[key as keyof typeof StreamingServers];
+        }
+    }
+}
 
 export const fetchTrendingMovies = async (): Promise<IMovieInfo[]> => {
     try {
