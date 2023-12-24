@@ -15,7 +15,7 @@
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
-		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/kit": "^2.0.6",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
@@ -48,8 +48,6 @@
 		"clsx": "^2.0.0",
 		"cmdk-sv": "^0.0.12",
 		"formsnap": "^0.4.1",
-		"hls.js": "^1.4.14",
-		"hlsdownloader": "^2.2.3",
 		"mode-watcher": "^0.1.2",
 		"radix-icons-svelte": "^1.2.1",
 		"sveltekit-superforms": "^1.12.0",
