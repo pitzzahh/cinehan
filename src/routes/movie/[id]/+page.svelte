@@ -31,7 +31,13 @@
 		</div>
 	</div>
 {:then result}
-	<VideoPlayer dataSource={result[0]} servers={result[1]} coverUrl={data.movieInfo.cover} />
+	<VideoPlayer
+		episodeId={result[0]}
+		mediaId={result[1]}
+		dataSource={result[2]}
+		servers={result[3]}
+		coverUrl={data.movieInfo.cover}
+	/>
 {:catch error}
 	<div class="relative md:h-[37rem]">
 		<Skeleton class="h-[18rem] w-full md:h-[37rem]" />
