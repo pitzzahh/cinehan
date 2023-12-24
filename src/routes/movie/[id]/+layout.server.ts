@@ -15,6 +15,8 @@ export const load = (async ({ params }) => {
             movieInfo: result,
             episodes,
             videoPlayerData: Promise.all([
+                episodeId,
+                movieId,
                 movieProvider.fetchEpisodeSources(episodeId, movieId),
                 movieProvider.fetchEpisodeServers(episodeId, movieId)
             ])
