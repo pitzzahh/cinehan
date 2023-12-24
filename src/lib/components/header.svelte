@@ -1,11 +1,8 @@
 <script lang="ts">
-	import * as Command from '$lib/components/ui/command';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
 	import * as Avatar from '$lib/components/ui/avatar';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import { Button } from '$lib/components/ui/button';
-	import { Home, ChatBubble, Video, ListBullet, Gear, Person } from 'radix-icons-svelte';
-	import { onMount } from 'svelte';
 	import { Icons } from '$lib/config/icons';
 	import { goto } from '$app/navigation';
 	import { siteConfig } from '$lib/config/site';
@@ -14,42 +11,12 @@
 	import { page } from '$app/stores';
 	import { store, fetchTrendingMovies } from '$lib';
 	import User from '$lib/config/icons/user.svelte';
+	import SearchDialog from '$lib/components/search-dialog.svelte';
 
-	let open = false;
 	let isLoggingOut = false;
-	let searchQuery: string;
-	let loading = false;
-	let items: string[] = [];
-
-	$: console.log(`SEARCH: ${searchQuery}`);
-
-	onMount(() => {
-		function handleKeydown(e: KeyboardEvent) {
-			if (e.key === 'k' && (e.metaKey || e.ctrlKey)) {
-				e.preventDefault();
-				open = true;
-			}
-		}
-		document.addEventListener('keydown', handleKeydown);
-
-		loading = true;
-
-		items = ['First Item', 'Second Item'];
-
-		loading = false;
-
-		return () => {
-			document.removeEventListener('keydown', handleKeydown);
-		};
-	});
 
 	const logout = () => {
 		isLoggingOut = true;
-	};
-
-	const runCommand = (cmd: () => void) => {
-		open = false;
-		cmd();
 	};
 </script>
 
@@ -67,10 +34,6 @@
 						: ''}
 					on:click={() => {
 						goto(link.href);
-						siteConfig.navLinks.forEach((e) => {
-							e.selected = false;
-						});
-						link.selected = true;
 						if (link.href === '/') {
 							$store.trendingMovies = fetchTrendingMovies();
 						}
@@ -83,7 +46,7 @@
 		<Button
 			variant="outline"
 			class="relative w-full justify-start text-sm text-muted-foreground sm:w-64 md:pr-12"
-			on:click={() => (open = true)}
+			on:click={() => ($store.openSearchBar = true)}
 			{...$$restProps}
 		>
 			<div>
@@ -145,59 +108,7 @@
 	</div>
 </header>
 
-<Command.Dialog bind:open>
-	<Command.Input
-		placeholder="Type a command or search..."
-		on:change={(e) => {
-			console.log(`INPUT`);
-			console.log(JSON.stringify(e));
-		}}
-	/>
-	<Command.List>
-		<Command.Empty>No results found.</Command.Empty>
-		<Command.Group heading="Suggestions">
-			<Command.Item value="Home" onSelect={() => runCommand(() => goto('/'))}>
-				<Home class="mr-2 h-4 w-4" />
-				<span>Home</span>
-			</Command.Item>
-			<Command.Item value="Trending" onSelect={() => runCommand(() => goto('/trending'))}>
-				<ChatBubble class="mr-2 h-4 w-4" />
-				<span>Trending</span>
-			</Command.Item>
-			<Command.Item value="Movies" onSelect={() => runCommand(() => goto('/movies'))}>
-				<Video class="mr-2 h-4 w-4" />
-				<span>Movies</span>
-			</Command.Item>
-			<Command.Item value="Series" onSelect={() => runCommand(() => goto('/series'))}>
-				<ListBullet class="mr-2 h-4 w-4" />
-				<span>Series</span>
-			</Command.Item>
-			<Command.Separator />
-			<Command.Item>
-				<Person class="mr-2 h-4 w-4" />
-				<span>Profile</span>
-				<Command.Shortcut>⌘P</Command.Shortcut>
-			</Command.Item>
-			<Command.Item>
-				<Gear class="mr-2 h-4 w-4" />
-				<span>Settings</span>
-				<Command.Shortcut>⌘S</Command.Shortcut>
-			</Command.Item>
-		</Command.Group>
-		<Command.Separator />
-		<Command.Group heading="Results">
-			{#if searchQuery}
-				<Command.Loading>Please wait</Command.Loading>
-			{:else}
-				{#each items as item}
-					<Command.Item value={item}>
-						{item}
-					</Command.Item>
-				{/each}
-			{/if}
-		</Command.Group>
-	</Command.List>
-</Command.Dialog>
+<SearchDialog />
 
 <AlertDialog.Root bind:open={isLoggingOut}>
 	<AlertDialog.Content>
