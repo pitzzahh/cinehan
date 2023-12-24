@@ -1,5 +1,7 @@
 import type { RequestHandler } from './$types';
 import { movieProvider, getStreamingServer } from '$lib';
+import type { IEpisodeServer } from '@consumet/extensions';
+import type { Setting } from '@oplayer/ui';
 
 export const POST: RequestHandler = async ({ request }) => {
     const requestBody = await request.json()
@@ -9,7 +11,7 @@ export const POST: RequestHandler = async ({ request }) => {
         name: source.quality,
         value: source.url,
         default: source.quality === 'auto'
-    }));
+    })) as Setting<any>[];
     return new Response(JSON.stringify(qualities), {
         status: 200,
         headers: {
