@@ -5,35 +5,27 @@
 	import * as Tooltip from '$lib/components/ui/tooltip';
 	import { Reload } from 'radix-icons-svelte';
 	import { Separator } from '$lib/components/ui/separator';
-	import type { PageData } from '../../routes/movie/[id]/$types';
+	import type { LayoutData } from '../../routes/movie/[id]/$types';
 	import { store } from '$lib';
-	// import HLSDownloader from 'hlsdownloader';
 
-	export let data: PageData;
-	let { movieInfo, sources } = data;
+	export let data: LayoutData;
+	let { movieInfo } = data;
 	$: isRequestingForDownload = false;
 
-	const download = () => {
-		const source = sources.sources;
-		console.log(`Downloading`);
-		// const downloader = new HLSDownloader({
-		// 	playlistURL: source[0].url
-		// });
-		// isRequestingForDownload = true;
-		// downloader.startDownload((err: any, msg: any) => {
-		// 	(err ? console.log(err) : console.log(msg))
-		// });
-		isRequestingForDownload = false;
-	};
+	const download = () => {};
 </script>
 
 {#if movieInfo}
 	<div
-		class="light-theme m-4 grid auto-cols-auto auto-rows-auto gap-2 rounded-md p-4 text-primary-foreground dark:text-secondary-foreground"
+		class="dark:bg-theme-dark_bg m-4 grid auto-cols-auto auto-rows-auto gap-2 rounded-md bg-theme p-4 text-primary-foreground dark:text-primary-foreground"
 	>
 		<div class="md:col-start-1">
 			<span class="mb-2 text-2xl font-bold">{movieInfo.title}</span>
-			<p class="text-slate-100">{movieInfo.description}</p>
+			{#if movieInfo.description}
+				<p class="text-slate-100">{movieInfo.description}</p>
+			{:else}
+				<Badge class="block text-center" variant="secondary">404 description not found</Badge>
+			{/if}
 		</div>
 		<Separator class="my-2 md:mx-2 md:h-full md:w-[1px]" orientation="horizontal" />
 		<div class="md:col-start-3">
@@ -47,7 +39,7 @@
 								<Badge class="mr-1">{cast}</Badge>
 							{/each}
 						{:else}
-							<Badge variant="destructive">404 not found</Badge>
+							<Badge variant="secondary">404 casts not found</Badge>
 						{/if}
 					</span>
 				</li>
@@ -59,7 +51,7 @@
 								<Badge class="mr-1">{genre}</Badge>
 							{/each}
 						{:else}
-							<Badge variant="destructive">404 not found</Badge>
+							<Badge variant="secondary">404 genres not found</Badge>
 						{/if}
 					</span>
 				</li>
@@ -68,10 +60,17 @@
 					{#if movieInfo.status}
 						<Badge>{movieInfo.status}</Badge>
 					{:else}
-						<Badge variant="destructive">404 not found</Badge>
+						<Badge variant="secondary">404 movie status not found</Badge>
 					{/if}
 				</li>
-				<li><strong class="mr-1">Rating:</strong><Badge>{movieInfo.rating}</Badge></li>
+				<li>
+					<strong class="mr-1">Rating:</strong>
+					{#if movieInfo.rating}
+						<Badge>{movieInfo.rating}</Badge>
+					{:else}
+						<Badge variant="secondary">404 movie rating not found</Badge>
+					{/if}
+				</li>
 			</ul>
 			<Separator class="my-2" orientation="horizontal" />
 			<Tooltip.Root>
