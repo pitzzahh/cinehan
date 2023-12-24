@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import { MOVIES, META, type IMovieResult, type IMovieInfo, type ISearch } from '@consumet/extensions';
+import { MOVIES, type IMovieResult, type IMovieInfo, StreamingServers } from '@consumet/extensions';
 import { error } from '@sveltejs/kit';
 
 export const store = writable({
@@ -14,6 +14,15 @@ export const store = writable({
 
 export let host = 'https://cinehan.vercel.app'
 export let movieProvider = new MOVIES.MovieHdWatch()
+
+export const getStreamingServer = (value: string): StreamingServers | undefined => {
+    for (const key in StreamingServers) {
+        if (StreamingServers[key as keyof typeof StreamingServers] === value) {
+            return StreamingServers[key as keyof typeof StreamingServers];
+        }
+    }
+    return undefined;
+}
 
 export const fetchTrendingMovies = async (): Promise<IMovieInfo[]> => {
     try {
