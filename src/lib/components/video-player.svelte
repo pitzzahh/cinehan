@@ -80,10 +80,10 @@
 
 									if (response.ok) {
 										const res = await response.json();
-										qualities = res.sources.map((video: IVideo) => ({
-											name: video.quality,
-											value: video.url,
-											default: video.quality === 'auto'
+										qualities = res.map((setting: Setting<any>) => ({
+											name: setting.name,
+											value: setting.value,
+											default: setting.default
 										})) as Setting<any>[];
 										const defaultQuality = qualities.find((q) => q.name === 'auto')?.value;
 										player.changeSource({ src: value });
