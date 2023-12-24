@@ -21,7 +21,6 @@ export const getStreamingServer = (value: string): StreamingServers | undefined 
             return StreamingServers[key as keyof typeof StreamingServers];
         }
     }
-    return undefined;
 }
 
 export const fetchTrendingMovies = async (): Promise<IMovieInfo[]> => {
