@@ -12,7 +12,6 @@ export const store = writable({
     cannotDownload: true
 })
 
-export let host = 'https://cinehan.vercel.app'
 export let movieProvider = new MOVIES.MovieHdWatch()
 
 export const getStreamingServer = (value: string): StreamingServers | undefined => {
