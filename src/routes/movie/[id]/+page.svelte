@@ -45,9 +45,9 @@
 			class="absolute left-1/2 top-1/2 flex -translate-x-1/2 -translate-y-1/2 transform items-center"
 		>
 			<ExclamationTriangle class="mr-2 h-4 w-4 " />
-			<span class="text-xl font-bold">{error.message}</span>
+			<span class="text-xl font-bold w-full">{error.message}</span>
 			<Button href={$page.url?.toString() ?? '/'} on:click={() => location.reload()}
-				>Dashboard</Button
+				>Retry</Button
 			>
 		</div>
 	</div>
