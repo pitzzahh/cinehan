@@ -62,7 +62,6 @@
 							})) as Setting<any>[],
 							async onChange({ name, value }) {
 								console.log(`Server changed to ${name} with url ${value}}`);
-								player.changeSource({ src: value });
 								const response: Response = await fetch(`${$page.url.host}/api/mediaInfo`, {
 									method: 'POST',
 									headers: {
@@ -73,6 +72,7 @@
 								console.log(`Response : ${JSON.stringify(response)}`);
 								if (response.ok) {
 									const res: Setting<any> = await response.json();
+									player.changeSource({ src: value });
 									player.changeQuality({ src: res.value });
 									console.log(`Source url changed to ${res.value}`);
 								} else {
